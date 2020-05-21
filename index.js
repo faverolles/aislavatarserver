@@ -10,8 +10,14 @@ const path = require('path');
 const cors = require('cors');
 const app = express();
 
-app.use(cors());
-app.options("*", cors());
+
+var corsOptions = {
+  origin: 'http://localhost:5000',
+  optionsSuccessStatus: 200 // some legacy browsers (IE11, various SmartTVs) choke on 204
+}
+
+// app.use(cors());
+// app.options("*", cors());
 
 app.use(express.static(path.join(__dirname, 'build')));
 
@@ -22,7 +28,7 @@ app.use(express.static(path.join(__dirname, 'build')));
 //   next();
 // });
 
-app.get('/', function (req, res) {
+app.get('/', cors(corsOptions), function (req, res) {
 
   res.sendFile(path.join(__dirname, 'build', 'index.html'));
 });
