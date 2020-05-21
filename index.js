@@ -7,16 +7,20 @@
 
 const express = require('express');
 const path = require('path');
+const cors = require('cors');
 const app = express();
+
+app.use(cors());
+app.options("*", cors());
 
 app.use(express.static(path.join(__dirname, 'build')));
 
 
-app.use(function (req, res, next) {
-  res.header("Access-Control-Allow-Origin", "http://34.82.125.153:5000"); // update to match the domain you will make the request from
-  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-  next();
-});
+// app.use(function (req, res, next) {
+//   res.header("Access-Control-Allow-Origin", "http://34.82.125.153:5000"); // update to match the domain you will make the request from
+//   res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+//   next();
+// });
 
 app.get('/', function (req, res) {
 
