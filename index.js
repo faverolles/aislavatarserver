@@ -19,7 +19,7 @@ const app = express();
 
 app.use('*', function (req, res, next) {
 //replace localhost:8080 to the ip address:port of your server
-    res.header("Access-Control-Allow-Origin", req.ip + ":" + req.port);
+    res.header("Access-Control-Allow-Origin", "*");
     res.header("Access-Control-Allow-Headers", "X-Requested-With");
     res.header('Access-Control-Allow-Headers', 'Content-Type');
     res.header('Access-Control-Allow-Credentials', true);
