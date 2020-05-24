@@ -11,15 +11,24 @@ const cors = require('cors');
 const app = express();
 
 
-var corsOptions = {
-  origin: 'http://34.82.125.153:5000',
-  optionsSuccessStatus: 200 // some legacy browsers (IE11, various SmartTVs) choke on 204
-}
+// var corsOptions = {
+//   origin: 'http://34.82.125.153:5000',
+//   optionsSuccessStatus: 200 // some legacy browsers (IE11, various SmartTVs) choke on 204
+// }
+
+
+app.use('*', function (req, res, next) {
+//replace localhost:8080 to the ip address:port of your server
+    res.header("Access-Control-Allow-Origin", "http://localhost:5000");
+    res.header("Access-Control-Allow-Headers", "X-Requested-With");
+    res.header('Access-Control-Allow-Headers', 'Content-Type');
+    res.header('Access-Control-Allow-Credentials', true);
+    next();
+});
+
 
 // app.use(cors());
-// app.options("*", cors());
-
-app.use(express.static(path.join(__dirname, 'build')));
+app.options("*", cors());
 
 
 // app.use(function (req, res, next) {
@@ -28,8 +37,11 @@ app.use(express.static(path.join(__dirname, 'build')));
 //   next();
 // });
 
-app.get('/', cors(corsOptions), function (req, res) {
+app.get('/', function (req, res) {
 
-  res.sendFile(path.join(__dirname, 'build', 'index.html'));
+    res.sendFile(path.join(__dirname, 'build', 'index.html'));
 });
+
+app.use(express.static(path.join(__dirname, 'build')));
+
 app.listen(5000);
